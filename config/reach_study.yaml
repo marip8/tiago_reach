@@ -1,0 +1,58 @@
+optimization:
+  radius: 0.2
+  max_steps: 15
+  step_improvement_threshold: 0.01
+  seed_state:
+    - name: torso_lift_joint
+      position: 0.0
+    - name: arm_1_joint
+      position: 1.57
+    - name: arm_2_joint
+      position: 0.0
+    - name: arm_3_joint
+      position: 0.0
+    - name: arm_4_joint
+      position: 0.0
+    - name: arm_5_joint
+      position: 0.0
+    - name: arm_6_joint
+      position: 0.0
+    - name: arm_7_joint
+      position: 0.0
+
+ik_solver:
+  name: MoveItIKSolver
+  distance_threshold: 0.0
+  planning_group: manipulator
+  collision_mesh_filename: package://tiago_reach/config/part.ply
+  collision_mesh_frame: reach_object
+  touch_links: []
+
+evaluator:
+  name: MultiplicativeEvaluator
+  plugins:
+    - name: ManipulabilityMoveIt
+      planning_group: manipulator
+    - name: DistancePenaltyMoveIt
+      planning_group: manipulator
+      distance_threshold: 0.025
+      exponent: 2
+      collision_mesh_filename: package://tiago_reach/config/part.ply
+      collision_mesh_frame: reach_object
+      touch_links: []
+
+display:
+  name: ROSDisplay
+  collision_mesh_filename: package://tiago_reach/config/part.ply
+  collision_mesh_frame: reach_object
+  kinematic_base_frame: base_footprint
+  marker_scale: 0.05
+
+target_pose_generator:
+  name: TransformedPointCloudTargetPoseGenerator
+  pcd_file: package://tiago_reach/config/part.pcd
+  points_frame: reach_object
+  target_frame: base_footprint
+
+logger:
+  name: BoostProgressConsoleLogger

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<robot name="reach_study" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:arg name="end_effector" default="pal-gripper"/> <!-- false, pal-gripper, pal-hey5, schunk-wsg-->
+  <xacro:arg name="ft_sensor" default="schunk-ft"/> <!-- false, schunk-ft -->
+  <xacro:arg name="laser_model" default="false"/> <!-- false, hokuyo, sick-551, sick-561, sick-571-->
+  <xacro:arg name="camera_model" default="false"/> <!-- false, orbbec-astra, orbbec-astra-pro, asus-xtion -->
+  <xacro:include filename="$(find tiago_description)/robots/tiago.urdf.xacro" />
+
+  <link name="tcp"/>
+  <joint name="gripper_base_link_to_tcp" type="fixed">
+    <parent link="gripper_base_link"/>
+    <child link="tcp"/>
+    <origin xyz="0 0 0.26" rpy="0 0 0"/>
+  </joint>
+
+  <link name="reach_object"/>
+  <joint name="test" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="reach_object"/>
+    <origin xyz="1.0 0.0 0.25" />
+  </joint>
+</robot>
